@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   HStack,
   Heading,
@@ -12,10 +13,10 @@ import useGenres, { Genre } from '../hooks/useGenres';
 
 interface Props {
   onSelectedGenre: (genre: Genre) => void;
-  selectedGenre: Genre | null;
+  selectedGenreId?: number;
 }
 
-const GenreList = ({ selectedGenre, onSelectedGenre }: Props) => {
+const GenreList = ({ selectedGenreId, onSelectedGenre }: Props) => {
   const { data, isLoading, error } = useGenres();
 
   if (error) return null;
@@ -23,7 +24,7 @@ const GenreList = ({ selectedGenre, onSelectedGenre }: Props) => {
   if (isLoading) return <Spinner />;
 
   return (
-    <>
+    <Box position="sticky" top={4}>
       <Heading fontSize="2xl" marginBottom={3}>
         Genres
       </Heading>
@@ -38,7 +39,7 @@ const GenreList = ({ selectedGenre, onSelectedGenre }: Props) => {
                 src={genre.image_background}
               />
               <Button
-                fontWeight={genre.id === selectedGenre?.id ? 'bold' : 'normal'}
+                fontWeight={genre.id === selectedGenreId ? 'bold' : 'normal'}
                 onClick={() => onSelectedGenre(genre)}
                 fontSize="lg"
                 variant="link"
@@ -51,7 +52,7 @@ const GenreList = ({ selectedGenre, onSelectedGenre }: Props) => {
           </ListItem>
         ))}
       </List>
-    </>
+    </Box>
   );
 };
 
